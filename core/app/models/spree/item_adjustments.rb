@@ -83,7 +83,7 @@ module Spree
     private
 
     def adjustments
-      @adjustments ||= item.adjustments.to_a
+      @adjustments ||= item.adjustments.all.to_a
     end
   end
 end
