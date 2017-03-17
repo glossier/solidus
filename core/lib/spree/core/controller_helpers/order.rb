@@ -21,10 +21,10 @@ module Spree
           @simple_current_order = find_order_by_token_or_user
 
           if @simple_current_order
-            @simple_current_order.last_ip_address = ip_address
+            @simple_current_order.update(last_ip_address: ip_address)
             return @simple_current_order
           else
-            @simple_current_order = Spree::Order.new
+            @simple_current_order = Spree::Order.new(last_ip_address: ip_address)
           end
         end
 
@@ -45,7 +45,7 @@ module Spree
           end
 
           if @current_order
-            @current_order.last_ip_address = ip_address
+            @current_order.update(last_ip_address: ip_address)
             return @current_order
           end
         end
