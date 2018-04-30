@@ -27,6 +27,7 @@ if [ ! -d "sandbox" ]; then
 fi
 
 cd ./sandbox
+echo "gem 'deface'" >> Gemfile
 echo "gem 'solidus', :path => '..'" >> Gemfile
 echo "gem 'solidus_auth_devise'" >> Gemfile
 
