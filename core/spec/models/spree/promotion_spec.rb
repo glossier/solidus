@@ -189,7 +189,7 @@ describe Spree::Promotion, type: :model do
           let(:usage_limit) { 1 }
           context "on a different order" do
             before do
-              FactoryGirl.create(
+              FactoryBot.create(
                 :completed_order_with_promotion,
                 promotion: promotion
               )
@@ -210,7 +210,7 @@ describe Spree::Promotion, type: :model do
 
     context "with an order-level adjustment" do
       let(:promotion) do
-        FactoryGirl.create(
+        FactoryBot.create(
           :promotion,
           :with_order_adjustment,
           code: "discount",
@@ -218,7 +218,7 @@ describe Spree::Promotion, type: :model do
         )
       end
       let(:promotable) do
-        FactoryGirl.create(
+        FactoryBot.create(
           :completed_order_with_promotion,
           promotion: promotion
         )
@@ -228,7 +228,7 @@ describe Spree::Promotion, type: :model do
 
     context "with an item-level adjustment" do
       let(:promotion) do
-        FactoryGirl.create(
+        FactoryBot.create(
           :promotion,
           :with_line_item_adjustment,
           code: "discount",
@@ -243,7 +243,7 @@ describe Spree::Promotion, type: :model do
         })
       end
       context "when there are multiple line items" do
-        let(:order) { FactoryGirl.create(:order_with_line_items, line_items_count: 2) }
+        let(:order) { FactoryBot.create(:order_with_line_items, line_items_count: 2) }
         describe "the first item" do
           let(:promotable) { order.line_items.first }
           it_behaves_like "it should"
@@ -254,7 +254,7 @@ describe Spree::Promotion, type: :model do
         end
       end
       context "when there is a single line item" do
-        let(:order) { FactoryGirl.create(:order_with_line_items) }
+        let(:order) { FactoryBot.create(:order_with_line_items) }
         let(:promotable) { order.line_items.first }
         it_behaves_like "it should"
       end
@@ -263,7 +263,7 @@ describe Spree::Promotion, type: :model do
 
   describe "#usage_count" do
     let(:promotion) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :promotion,
         :with_order_adjustment,
         code: "discount"
@@ -273,13 +273,13 @@ describe Spree::Promotion, type: :model do
     subject { promotion.usage_count }
 
     context "when the code is applied to a non-complete order" do
-      let(:order) { FactoryGirl.create(:order_with_line_items) }
+      let(:order) { FactoryBot.create(:order_with_line_items) }
       before { promotion.activate(order: order, promotion_code: promotion.codes.first) }
       it { is_expected.to eq 0 }
     end
     context "when the code is applied to a complete order" do
       let!(:order) do
-        FactoryGirl.create(
+        FactoryBot.create(
           :completed_order_with_promotion,
           promotion: promotion
         )
@@ -444,11 +444,11 @@ describe Spree::Promotion, type: :model do
     end
 
     context "when the promotion's usage limit is exceeded" do
-      let(:order) { FactoryGirl.create(:completed_order_with_promotion, promotion: promotion) }
-      let(:promotion) { FactoryGirl.create(:promotion, :with_order_adjustment) }
+      let(:order) { FactoryBot.create(:completed_order_with_promotion, promotion: promotion) }
+      let(:promotion) { FactoryBot.create(:promotion, :with_order_adjustment) }
 
       before do
-        FactoryGirl.create(
+        FactoryBot.create(
           :completed_order_with_promotion,
           promotion: promotion
         )
@@ -461,12 +461,12 @@ describe Spree::Promotion, type: :model do
     end
 
     context "when the promotion code's usage limit is exceeded" do
-      let(:order) { FactoryGirl.create(:completed_order_with_promotion, promotion: promotion) }
+      let(:order) { FactoryBot.create(:completed_order_with_promotion, promotion: promotion) }
       let(:promotion) { create(:promotion, :with_order_adjustment, code: 'abc123', per_code_usage_limit: 1) }
       let(:promotion_code) { promotion.codes.first }
 
       before do
-        FactoryGirl.create(
+        FactoryBot.create(
           :completed_order_with_promotion,
           promotion: promotion
         )

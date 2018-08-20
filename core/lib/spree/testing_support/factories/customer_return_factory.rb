@@ -2,12 +2,12 @@ require 'spree/testing_support/factories/stock_location_factory'
 require 'spree/testing_support/factories/order_factory'
 require 'spree/testing_support/factories/return_item_factory'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :customer_return, class: Spree::CustomerReturn do
     association(:stock_location, factory: :stock_location)
 
     transient do
-      line_items_count 1
+      line_items_count { 1 }
       return_items_count { line_items_count }
       shipped_order { create :shipped_order, line_items_count: line_items_count }
       return_authorization { create :return_authorization, order: shipped_order }

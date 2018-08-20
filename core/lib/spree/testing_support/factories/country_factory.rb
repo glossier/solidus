@@ -1,8 +1,8 @@
 require 'carmen'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :country, class: Spree::Country do
-    iso 'US'
+    iso { 'US' }
 
     transient do
       carmen_country { Carmen::Country.coded(iso) || fail("Unknown country iso code: #{iso.inspect}") }

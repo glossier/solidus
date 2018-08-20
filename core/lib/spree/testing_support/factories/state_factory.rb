@@ -1,10 +1,10 @@
 require 'spree/testing_support/factories/country_factory'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :state, class: Spree::State do
     transient do
-      country_iso 'US'
-      state_code 'AL'
+      country_iso { 'US' }
+      state_code { 'AL' }
 
       carmen_subregion do
         carmen_country = Carmen::Country.coded(country.iso)
